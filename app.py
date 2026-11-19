@@ -21,7 +21,7 @@ import streamlit as st
 
 from extractor import extract, build_summary
 
-st.set_page_config(page_title="LabLensAI Prototype", layout="centered")
+st.set_page_config(page_title="LabLensAI Prototype", page_icon="🔬", layout="centered")
 
 # --------------------------------------------------------------------------
 # Sample data (synthetic)
@@ -55,15 +55,74 @@ def _rerun():
 
 
 # --------------------------------------------------------------------------
+# Visual style (presentation only; no effect on logic)
+# --------------------------------------------------------------------------
+ACCENT = "#0f766e"   # teal
+INK = "#0f172a"
+st.markdown(f"""
+<style>
+  .block-container {{ padding-top: 3.5rem; max-width: 820px; }}
+  h1, h2, h3 {{ color: {INK}; letter-spacing: -0.01em; }}
+  .ll-hero {{
+    background: linear-gradient(135deg, #0f766e 0%, #155e75 55%, #1e3a8a 100%);
+    color: #fff; border-radius: 18px; padding: 28px 30px 22px; margin-bottom: 18px;
+    box-shadow: 0 10px 30px rgba(15, 118, 110, 0.18);
+  }}
+  .ll-hero .ll-kicker {{ font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.8; }}
+  .ll-hero h1 {{ color: #fff; font-size: 2.3rem; margin: 4px 0 2px; padding: 0; }}
+  .ll-hero p {{ color: rgba(255,255,255,0.88); margin: 6px 0 0; font-size: 1.02rem; line-height: 1.5; }}
+  .ll-steps {{ display: flex; gap: 8px; margin: 4px 0 18px; flex-wrap: wrap; }}
+  .ll-step {{
+    flex: 1; min-width: 150px; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 12px;
+    background: #f8fafc; color: #64748b; font-size: 0.9rem;
+  }}
+  .ll-step b {{ display: inline-block; width: 22px; height: 22px; border-radius: 50%; text-align: center;
+    line-height: 22px; margin-right: 6px; background: #e2e8f0; color: #475569; font-size: 0.8rem; }}
+  .ll-step.on {{ border-color: {ACCENT}; background: #f0fdfa; color: {INK}; font-weight: 600; }}
+  .ll-step.on b {{ background: {ACCENT}; color: #fff; }}
+  .ll-step.done {{ color: #334155; }}
+  .ll-step.done b {{ background: #99f6e4; color: #134e4a; }}
+  .ll-section {{ display: flex; align-items: baseline; gap: 10px; margin: 26px 0 6px; }}
+  .ll-section .num {{ background: {ACCENT}; color: #fff; border-radius: 8px; padding: 2px 9px;
+    font-weight: 700; font-size: 0.9rem; }}
+  .ll-section .title {{ font-size: 1.4rem; font-weight: 700; color: {INK}; }}
+  .ll-field {{ margin: 16px 0 4px; font-weight: 600; color: {INK}; }}
+  .ll-pill {{ display: inline-block; margin-left: 8px; padding: 1px 10px; border-radius: 999px;
+    font-size: 0.75rem; font-weight: 600; vertical-align: middle; }}
+  .ll-pill.found {{ background: #dcfce7; color: #166534; }}
+  .ll-pill.ambiguous {{ background: #ffedd5; color: #9a3412; }}
+  .ll-pill.missing {{ background: #fee2e2; color: #991b1b; }}
+  .ll-note {{ font-size: 0.85rem; color: #64748b; }}
+  div[data-testid="stExpander"] details {{ border-radius: 10px; }}
+  .stButton > button[kind="primary"], button[data-testid="stBaseButton-primary"] {{
+    background: {ACCENT}; border-color: {ACCENT}; border-radius: 10px; font-weight: 600;
+  }}
+  .stButton > button[kind="primary"]:hover, button[data-testid="stBaseButton-primary"]:hover {{
+    background: #115e59; border-color: #115e59;
+  }}
+  .stButton > button, .stDownloadButton > button {{ border-radius: 10px; }}
+  textarea, input {{ border-radius: 10px !important; }}
+</style>
+""", unsafe_allow_html=True)
+
+
+def section(num, title):
+    st.markdown(f'<div class="ll-section"><span class="num">{num}</span>'
+                f'<span class="title">{title}</span></div>', unsafe_allow_html=True)
+
+
+# --------------------------------------------------------------------------
 # Header + honest status
 # --------------------------------------------------------------------------
-st.title("LabLensAI")
-st.subheader("Laboratory Record-Continuity Platform")
-st.write(
-    "Paste messy lab notes or an instrument export. LabLens drafts a structured experiment "
-    "record, **shows you exactly which words each value came from**, and lets you correct it "
-    "before anything is saved."
+st.markdown(
+    '<div class="ll-hero"><div class="ll-kicker">Laboratory record continuity · prototype</div>'
+    '<h1>🔬 LabLensAI</h1>'
+    '<p>Paste messy lab notes or an instrument export. LabLens drafts a structured experiment '
+    'record, <b>shows you exactly which words each value came from</b>, and lets you correct it '
+    'before anything is saved.</p></div>',
+    unsafe_allow_html=True,
 )
+steps_slot = st.empty()  # filled at the end of the run, once the current step is known
 with st.expander("Prototype status: what is real vs. simulated", expanded=False):
     st.markdown(
         "- **Working:** text + TXT/CSV input, field extraction, evidence view, editing, "
@@ -74,15 +133,14 @@ with st.expander("Prototype status: what is real vs. simulated", expanded=False)
         "between sessions, linking related runs."
     )
 st.caption(
-    "Privacy: use sample or non-sensitive notes. Nothing is stored after you close this tab, "
+    "🔒 Privacy: use sample or non-sensitive notes. Nothing is stored after you close this tab, "
     "and uploaded files are read in memory only."
 )
-st.divider()
 
 # --------------------------------------------------------------------------
 # Step 1: Ingest
 # --------------------------------------------------------------------------
-st.header("1. Add experiment notes")
+section(1, "Add experiment notes")
 choice = st.selectbox("Start from a sample or choose Custom Input:", list(SAMPLES.keys()))
 notes = st.text_area(
     "Paste raw notes, metadata, or instrument log text:",
@@ -131,15 +189,14 @@ if ss.flash:
 # Step 2: Review & correct
 # --------------------------------------------------------------------------
 STATUS_BADGE = {
-    "found": ":green[found in notes]",
-    "ambiguous": ":orange[more than one value: choose]",
-    "missing": ":red[not found: fill in or leave blank]",
+    "found": "found in notes",
+    "ambiguous": "more than one value: choose",
+    "missing": "not found: fill in or leave blank",
 }
 
 if ss.draft:
     d, n = ss.draft, ss.draft_n
-    st.divider()
-    st.header("2. Review the draft record")
+    section(2, "Review the draft record")
     st.caption("Draft values come only from your text. Check each one against the evidence before confirming.")
 
     for w in d["warnings"]:
@@ -148,7 +205,8 @@ if ss.draft:
     edited = {}
     for key in ["date", "sample_id", "equipment", "observations", "follow_up"]:
         f = d["fields"][key]
-        st.markdown(f"**{f['name']}** · {STATUS_BADGE[f['status']]}")
+        st.markdown(f'<div class="ll-field">{f["name"]}<span class="ll-pill {f["status"]}">'
+                    f'{STATUS_BADGE[f["status"]]}</span></div>', unsafe_allow_html=True)
         if f["status"] == "ambiguous":
             pick = st.radio(
                 f"Which {f['name']} is correct?",
@@ -170,7 +228,8 @@ if ss.draft:
                 for ev in f["evidence"]:
                     st.code(ev, language=None)
 
-    st.markdown("**Recorded settings** · edit, add, or delete rows")
+    st.markdown('<div class="ll-field">Recorded settings <span class="ll-note">· edit, add, or delete rows</span></div>',
+                unsafe_allow_html=True)
     params_df = pd.DataFrame(d["parameters"] or [], columns=["type", "label_in_notes", "value", "evidence"])
     params_edit = st.data_editor(
         params_df, num_rows="dynamic", width="stretch", key=f"params_{n}",
@@ -236,8 +295,7 @@ if ss.draft:
 # Step 3: Session log
 # --------------------------------------------------------------------------
 if ss.log:
-    st.divider()
-    st.header("3. Confirmed records (this session)")
+    section(3, "Confirmed records (this session)")
     st.dataframe(
         pd.DataFrame([{k: r[k] for k in ("record_id", "date", "sample_id", "equipment", "summary")} for r in ss.log]),
         width="stretch", hide_index=True,
@@ -245,3 +303,14 @@ if ss.log:
     st.download_button("Download records as JSON", data=json.dumps(ss.log, indent=2),
                        file_name="lablens_records.json", mime="application/json")
     st.caption("Records are kept only for this browser session (persistent storage is planned).")
+
+# --------------------------------------------------------------------------
+# Progress tracker (rendered into the slot under the header)
+# --------------------------------------------------------------------------
+current = 2 if ss.draft else (3 if ss.log else 1)
+labels = ["Add notes", "Review & correct", "Confirm & log"]
+chips = []
+for i, label in enumerate(labels, 1):
+    cls = "on" if i == current else ("done" if i < current or (i == 3 and ss.log) else "")
+    chips.append(f'<div class="ll-step {cls}"><b>{i}</b>{label}</div>')
+steps_slot.markdown('<div class="ll-steps">' + "".join(chips) + "</div>", unsafe_allow_html=True)
