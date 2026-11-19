@@ -1,0 +1,58 @@
+
+### Typical 1 - lithography bench note (Sample 1)
+INPUT: 'Date: Oct 12, 2026. Sample ID: Si-Wafer-402. Used Karl Suss Aligner. Exposure time: 8.5s. Note: Edge bead removal seemed uneven on the south quadrant. File attached: optical_microscope_042.png'
+  Date          found      Oct 12, 2026
+  Sample ID     found      Si-Wafer-402
+  Equipment     found      Karl Suss Aligner
+  Observations  found      Note: Edge bead removal seemed uneven on the south quadrant.
+  Follow-up     missing    []
+  Settings: [('Exposure time', '8.5 s')]
+  Steps: ['Exposure', 'Edge bead removal'] | Files: ['optical_microscope_042.png']
+  Warnings: []
+  Summary: Oct 12, 2026: run on Si-Wafer-402 using Karl Suss Aligner. Settings recorded: Exposure time 8.5 s. Observation: Edge bead removal seemed uneven on the south quadrant.
+
+### Typical 2 - informal PECVD note (custom input; before/after case)
+INPUT: 'Nov 3 2026. Sample GaN-117. Ran PECVD SiN deposition, 300C, 40 min. Thickness looked thin on ellipsometer, recheck tomorrow.'
+  Date          found      Nov 3 2026
+  Sample ID     found      GaN-117
+  Equipment     found      PECVD, ellipsometer
+  Observations  found      Thickness looked thin on ellipsometer, recheck tomorrow.
+  Follow-up     found      Thickness looked thin on ellipsometer, recheck tomorrow.
+  Settings: [('Temperature', '300 C'), ('Time', '40 min')]
+  Steps: ['Deposition'] | Files: []
+  Warnings: []
+  Summary: Nov 3 2026: run on GaN-117 using PECVD, ellipsometer. Settings recorded: Temperature 300 C; Time 40 min. Observation: Thickness looked thin on ellipsometer, recheck tomorrow.
+
+### Challenge - shorthand laser note, uncertain ID, no date
+INPUT: 'laser test again, 2.5 W, 1064 nm, spot looked off-center on sample LT-3? maybe LT-8. redo w/ new lens'
+  Date          missing    []
+  Sample ID     found      LT-3
+  Equipment     missing    []
+  Observations  found      laser test again, 2.5 W, 1064 nm, spot looked off-center on sample LT-3?
+  Follow-up     found      redo w/ new lens
+  Settings: [('Power', '2.5 W'), ('Wavelength', '1064 nm')]
+  Steps: [] | Files: []
+  Warnings: ['Date: not found in your notes. Fill it in or leave it blank; LabLens will not guess.']
+  Summary: [date not given]: run on LT-3. Settings recorded: Power 2.5 W; Wavelength 1064 nm. Observation: laser test again, 2.5 W, 1064 nm, spot looked off-center on sample LT-3? Follow-up: redo w/ new lens
+
+### Invalid - empty input
+INPUT: ''
+BLOCKED: No input yet. Paste your notes or attach a TXT/CSV file, then try again.
+
+### Invalid - non-lab text
+INPUT: 'hello there'
+BLOCKED: We couldn't find any experiment details in this input (no date, sample ID, equipment, or measured settings). Add at least a sample ID and what you ran, e.g. 'Sample GaN-117, PECVD 300C 40 min'.
+
+### Risk - two wafers in one note, defect not tied to one
+INPUT: 'Wafer W-12 and wafer W-14 went in the furnace at 950C for 2 h on 11/02/2026, not sure which one cracked.'
+  Date          found      11/02/2026
+  Sample ID     ambiguous  ['W-12', 'W-14']
+  Equipment     found      furnace
+  Observations  found      Wafer W-12 and wafer W-14 went in the furnace at 950C for 2 h on 11/02/2026, not sure which one cracked.
+  Follow-up     missing    []
+  Settings: [('Temperature', '950 C'), ('Time', '2 h')]
+  Steps: [] | Files: []
+  Warnings: ['Sample ID: more than one value found (W-12, W-14). Choose the right one before confirming.']
+  Summary: 11/02/2026: run on [sample ID needs your choice] using furnace. Settings recorded: Temperature 950 C; Time 2 h. Observation: Wafer W-12 and wafer W-14 went in the furnace at 950C for 2 h on 11/02/2026, not sure which one cracked.
+
+Repeat check: Typical 2 run 3 times -> 1 distinct output(s)
