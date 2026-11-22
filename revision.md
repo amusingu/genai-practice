@@ -39,7 +39,7 @@ All three peer reviews I received said the same thing: my submission contained o
 | Feedback or observed issue | Decision | What changed, or why it was deferred |
 |---|---|---|
 | Peer reviewers (3 of 3): no repository or Replit link, so nothing could be tested | **Acted on** | Links to the live prototype and repository are at the top of the README with access instructions. The Canvas submission now includes the repository link |
-| Instructor: the live app was not part of my own evidence | **Acted on** | The before/after comparison uses a screenshot of the live Replit app (`docs/screenshots/`). Test cases record what the app actually did |
+| Instructor: the live app was not part of my own evidence | **Acted on** | The before/after comparison below records what the live Replit app actually did, before and after the revision, on the same input |
 | Instructor: no next steps listed with limitations | **Acted on** | Added "Remaining limitations" and "Next priorities" (sections 5 and 6) |
 | Instructor: the PDF named no repository | **Acted on** | All documentation now lives in the repository and is linked from the README |
 | My own known limitation: attached files listed by name only | **Acted on (partly)** | TXT/CSV contents are now read. Images are still not read; the app says so at upload time and asks the user to type the key values |
@@ -58,7 +58,7 @@ All three peer reviews I received said the same thing: my submission contained o
 
 ## 3. Evaluation
 
-**How these were run:** Each input was run through `extractor.py` with `tests/run_test_cases.py`. The raw output is saved in `tests/test_output.txt`. Typical 2 and the Risk case were also clicked through in the deployed Replit app (Nov 19), and the on-screen fields, warnings, summary, and Confirm-button state matched the table. Typical 2 was confirmed into the session log. Screenshots are in `docs/screenshots/`.
+**How these were run:** Each input was run through `extractor.py` with `tests/run_test_cases.py`. The raw output is saved in `tests/test_output.txt`. Typical 2 and the Risk case were also clicked through in the deployed Replit app (Nov 19), and the on-screen fields, warnings, summary, and Confirm-button state matched the table. Typical 2 was confirmed into the session log.
 
 **What these tests can and cannot show:** The extraction step is a rule-based stand-in, so these tests check whether the review flow is useful and whether the safeguard works. They do **not** measure the accuracy or reliability of an AI model.
 
@@ -86,8 +86,6 @@ All three peer reviews I received said the same thing: my submission contained o
 | Summary | First 120 characters of the raw text, cut off mid-word | "Nov 3 2026: run on GaN-117 using PECVD, ellipsometer. Settings recorded: Temperature 300 C; Time 40 min. Observation: Thickness looked thin…" |
 | Steps | Generic: "Raw log ingestion into LabLens engine…" | `Deposition` (only steps mentioned in the note) |
 | User control | None (read-only) | Edit every field, then confirm or reject |
-
-Screenshots: before `docs/screenshots/before_custom_input_GaN-117.jpg`, after `docs/screenshots/after_custom_input_GaN-117.jpg`. The risk safeguard is shown in `docs/screenshots/risk_case_ambiguous_sample_id.jpg`.
 
 **Did the revision help?** Yes for this issue. Before, the record ignored everything the researcher wrote. After, every field comes from their words and can be traced back to them. This was the most important gap, because it is the only path a real user would take.
 
