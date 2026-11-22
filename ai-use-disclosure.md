@@ -7,11 +7,11 @@
 
 ## How AI helped
 - **Problem Framing:** Gemini helped outline the architecture of a multimodal app that takes note images and instrument text.
-- **This revision:** Claude helped me turn my feedback into revision priorities. It drafted the rule-based `extractor.py` (the stand-in for the planned AI step), the review-and-confirm changes to `app.py`, the test script, `revision.md`, this disclosure, and the README. Later, at my request, it also restyled the app's appearance. I reviewed the drafts and decided what to keep and submit.
+- **This revision:** Claude helped me turn my feedback into revision priorities. It drafted the rule-based `extractor.py` (the stand-in for the planned AI step), the review-and-confirm changes to `app.py`, the test script, `revision.md`, and the README. Later, at my request, it also restyled the app's appearance. I reviewed the drafts and decided what to keep and submit.
 
 ## Representative prompts
 1. **Gemini (Problem Framing):** "Help me outline a system architecture for a multimodal web app that accepts handwritten note images and raw instrument text, sending them to a multimodal AI endpoint to extract structured metadata." *Produced:* a scaffold of the ingest → extract → review flow. *What I changed:* I narrowed it to a single-page Replit prototype with no hardware integration.
-2. **Claude (this milestone):** I asked Claude to review my project folder (problem framing, prototype note, links, and feedback) and help with the Prototype Revision assignment. *Produced:* drafts of the extractor, app changes, test cases, and documentation. *What I did with it:* I reviewed the drafts and decided what to keep and submit.
+2. **Claude (this milestone):** I asked Claude to review my project folder and find the best ways to integrate the feedback with the Prototype Revision assignment. *Produced:* drafts of the extractor, app changes. *What I did with it:* I reviewed the drafts and decided what to keep and submit.
 3. **Claude (this milestone):** "Make the website a little more aesthetically pleasing." *Produced:* a header banner, a three-step progress tracker, coloured status labels, and a teal theme, with no change to the app's logic.
 
 ## Human judgment
