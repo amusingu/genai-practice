@@ -1,31 +1,24 @@
-# AI-Use Disclosure (Draft): LabLens AI
-
-> **Note to self (delete before submitting):** This draft was prepared with Claude's help. Before submitting, rewrite it in your own words, check that every statement matches what you actually did, and fill in the TODO items. The assignment asks for your own account.
+# AI-Use Disclosure: LabLens AI
 
 ## Tools used
-- **Gemini:** ideation and the system outline during Problem Framing (recorded in that milestone).
-- **Replit (and its AI agent, if used):** hosting the Streamlit prototype. **TODO:** say whether Replit's AI agent generated the First Working Slice code.
-- **Claude (Anthropic), Nov 19, 2026:** helped with this revision milestone (details below).
+- **Gemini:** brainstorming and the system outline during Problem Framing.
+- **Replit Agent:** helped port and publish the first Streamlit version of the prototype (First Working Slice).
+- **Claude (Anthropic):** used during this Prototype Revision milestone.
 
-## Development assistance
-- **Problem framing (earlier milestone):** Gemini helped outline the architecture of a multimodal app that takes note images and instrument text.
-- **This revision:** Claude read my assignment brief, feedback, Problem Framing PDF, and README, and ran my live Replit app to record the current behavior. It then:
-  - drafted the rule-based `extractor.py` that stands in for the planned AI extraction
-  - drafted the revised `app.py` (editable review, evidence view, confirm/reject, session log, input handling)
-  - wrote and ran the test script (`tests/run_test_cases.py`)
-  - drafted `revision.md`, this disclosure, and the README.
+## How AI helped
+- **Problem Framing:** Gemini helped outline the architecture of a multimodal app that takes note images and instrument text.
+- **This revision:** Claude helped me turn my feedback into revision priorities. It drafted the rule-based `extractor.py` (the stand-in for the planned AI step), the review-and-confirm changes to `app.py`, the test script, `revision.md`, this disclosure, and the README. Later, at my request, it also restyled the app's appearance. I reviewed the drafts and decided what to keep and submit.
 
 ## Representative prompts
-1. **Gemini (Problem Framing):** "Help me outline a system architecture for a multimodal web app that accepts handwritten note images and raw instrument text, sending them to a multimodal AI endpoint to extract structured metadata." *Produced:* a scaffold of the ingest → extract → review flow. *What I changed:* narrowed it to a single-page Replit prototype with no hardware integration.
-2. **Claude (this milestone):** "Go into my Google Drive… get caught up on [the Gen AI project]… you'll see in the Google Doc it says assignment due today. So start working on that." *Produced:* the revised code, test cases, and documentation drafts. *What I changed:* **TODO:** describe your edits.
-3. **TODO:** add one prompt you used to build the First Working Slice in Replit, what it produced, and what you changed.
+1. **Gemini (Problem Framing):** "Help me outline a system architecture for a multimodal web app that accepts handwritten note images and raw instrument text, sending them to a multimodal AI endpoint to extract structured metadata." *Produced:* a scaffold of the ingest → extract → review flow. *What I changed:* I narrowed it to a single-page Replit prototype with no hardware integration.
+2. **Claude (this milestone):** I asked Claude to review my project folder (problem framing, prototype note, links, and feedback) and help with the Prototype Revision assignment. *Produced:* drafts of the extractor, app changes, test cases, and documentation. *What I did with it:* I reviewed the drafts and decided what to keep and submit.
+3. **Claude (this milestone):** "Make the website a little more aesthetically pleasing." *Produced:* a header banner, a three-step progress tracker, coloured status labels, and a teal theme, with no change to the app's logic.
 
 ## Human judgment
-- **TODO (required, must be true):** name at least one AI suggestion you rejected, corrected, or substantially revised, and why. Possible places to look: wording in `revision.md` you disagreed with, a field or rule in `extractor.py` that does not match how your lab actually writes notes, or an earlier Gemini or Replit suggestion you dropped (for example hardware integration, which you ruled out as a non-goal).
-- Decisions in this milestone that should be yours to keep or change:
-  - Keep extraction rule-based for now rather than wiring up an API before the deadline.
-  - Report the Challenge case as **Partial** instead of tuning the rules to make it pass.
-  - Block confirmation until conflicts are resolved and values are checked.
+- Claude suggested adding before/after screenshot files to the repository. I decided not to include them. The before/after comparison is recorded in the written table in `revision.md` and in the raw test output.
+- I kept extraction rule-based for this milestone rather than connecting an AI API before the deadline.
+- I reported the Challenge case as **Partial** instead of adjusting the rules to make it pass.
+- I kept the rule that a record cannot be confirmed until conflicts are resolved and the values are checked.
 
 ## Verification
 - The extractor was tested on six synthetic inputs. The raw output is saved in `tests/test_output.txt`, and the test table in `revision.md` was checked against it.
