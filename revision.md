@@ -48,11 +48,11 @@ All three peer reviews I received said the same thing: my submission contained o
 
 ### Substitute user session (because peer feedback did not cover the product)
 
-> **TODO (Ategeka):** The assignment asks for one short session with a classmate or another person when peer feedback was not usable. Have one person try the central task on the revised app (for example, paste one of their own lab notes, or Sample 1), then fill in this table with what actually happened. Do not include their name.
+Because the peer reviews could not test the product, I ran one short session with a researcher who works in a biochemistry lab at the University of Notre Dame (name withheld).
 
 | What they tried | What happened | What I changed or decided |
 |---|---|---|
-| _to fill in_ | _to fill in_ | _to fill in_ |
+| They used their own lab notes: they pasted text from scanned lab notes and from lab notes they keep in Google Drive, then extracted a draft record | The central task worked well for them. Their notes produced a draft record they could review | I decided to keep the central flow as it is for this milestone |
 
 ---
 
