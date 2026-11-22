@@ -38,7 +38,7 @@ In Replit, the app lives in `artifacts/lablens-streamlit/` and is launched by `r
 Run locally: `pip install -r requirements.txt`, then `streamlit run app.py`
 
 ## Demo Video
-**TODO:** paste the Google Drive viewing link here (shared with ehughes8@nd.edu and ghuang3@nd.edu).
+[Watch the demo video on Google Drive](https://drive.google.com/file/d/18C7w82vdW6K5ybCMaTBPZdLiESomHhga/view)
 
 ## Previous milestone (First Working Slice)
 The first slice showed template records for two prepared samples. Any custom input returned a generic placeholder record. Its three tests and three known limitations are carried forward and addressed in [revision.md](revision.md).
