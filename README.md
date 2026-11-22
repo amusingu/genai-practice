@@ -24,7 +24,6 @@ Example custom input: `Nov 3 2026. Sample GaN-117. Ran PECVD SiN deposition, 300
 - **[Prototype Revision](revision.md):** priority improvements, response to feedback, five test cases, before/after comparison, interpretation, risk response, limitations, next priorities
 - **[AI-Use Disclosure (draft)](ai-use-disclosure.md)**
 - **Test evidence:** [`tests/run_test_cases.py`](tests/run_test_cases.py) and its raw output in [`tests/test_output.txt`](tests/test_output.txt)
-- **Screenshots:** [`docs/screenshots/`](docs/screenshots/)
 
 ## Code
 | File | Purpose |
